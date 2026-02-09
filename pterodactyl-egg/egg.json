@@ -6,7 +6,7 @@
   },
   "exported_at": "2026-02-09T00:00:00+00:00",
   "name": "DeepslateMC",
-  "author": "nurtonyxy",
+  "author": "nurtonyxy@users.noreply.github.com",
   "description": "DeepslateMC - Minecraft 1.21.11",
   "features": null,
   "docker_images": {
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "installation": {
-      "script": "#!/bin/bash\nset -e\napt-get update -y\napt-get install -y curl\n# Download server jar from provided URL\ncurl -L -o ${SERVER_JAR} \"https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar\"\n",
+      "script": "#!/bin/bash\nset -e\ncd /mnt/server\napt-get update -y\napt-get install -y curl\n# Download server jar from provided URL\ncurl -fsSL -o \"${SERVER_JAR}\" \"${DOWNLOAD_URL}\"\n# Set MOTD from server name\nsafe_motd=$(printf '%s' \"$MC_SERVER_NAME\" | sed -e 's/[\\\\/&]/\\\\\\\\&/g')\nif [ -f server.properties ]; then\n  if grep -q '^motd=' server.properties; then\n    sed -i \"s/^motd=.*/motd=${safe_motd}/\" server.properties\n  else\n    echo \"motd=${MC_SERVER_NAME}\" >> server.properties\n  fi\nelse\n  echo \"motd=${MC_SERVER_NAME}\" > server.properties\nfi\nls -la \"${SERVER_JAR}\"\n",
       "container": "ghcr.io/pterodactyl/installers:debian",
       "entrypoint": "bash"
     }
@@ -39,13 +39,23 @@
       "field_type": "text"
     },
     {
-      "name": "Server Memory",
-      "description": "Memory in MB. Used by the panel to set limits.",
-      "env_variable": "SERVER_MEMORY",
-      "default_value": "1024",
+      "name": "Download URL",
+      "description": "Where to download the server jar.",
+      "env_variable": "DOWNLOAD_URL",
+      "default_value": "https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar",
+      "user_viewable": true,
+      "user_editable": false,
+      "rules": "required|string|max:200",
+      "field_type": "text"
+    },
+    {
+      "name": "Server Name",
+      "description": "Sets the MOTD in server.properties.",
+      "env_variable": "MC_SERVER_NAME",
+      "default_value": "DeepslateMC",
       "user_viewable": true,
       "user_editable": true,
-      "rules": "required|integer|min:256",
+      "rules": "required|string|max:200",
       "field_type": "text"
     }
   ]

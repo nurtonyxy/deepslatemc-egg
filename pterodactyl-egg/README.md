@@ -4,7 +4,8 @@ Import this egg into your Pterodactyl panel. It uses Java 21 and will download `
 
 Variables:
 - `SERVER_JAR` - default `DeepslateMC.jar`
-- `SERVER_MEMORY` - memory in MB
+- `DOWNLOAD_URL` - fixed download URL for the server jar
+- `MC_SERVER_NAME` - sets the MOTD in `server.properties`
 
 Startup command:
 

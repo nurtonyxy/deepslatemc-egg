@@ -1,0 +1,27 @@
+name: DeepslateMC-Pelican
+author: nurtonyxy
+description: "Pelican egg for DeepslateMC - Minecraft 1.21.11"
+java_version: "21"
+startup: "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{JAR}}"
+variables:
+  JAR: DeepslateMC.jar
+  MEMORY: "1024"
+  DOWNLOAD_URL: "https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar"
+  MC_SERVER_NAME: "DeepslateMC"
+install: |-
+  #!/bin/bash
+  set -e
+  cd /mnt/server
+  apt-get update -y
+  apt-get install -y curl
+  curl -fsSL -o ${JAR} "${DOWNLOAD_URL}"
+  safe_motd=$(printf '%s' "$MC_SERVER_NAME" | sed -e 's/[\\/&]/\\&/g')
+  if [ -f server.properties ]; then
+    if grep -q '^motd=' server.properties; then
+      sed -i "s/^motd=.*/motd=${safe_motd}/" server.properties
+    else
+      echo "motd=${MC_SERVER_NAME}" >> server.properties
+    fi
+  else
+    echo "motd=${MC_SERVER_NAME}" > server.properties
+  fi
