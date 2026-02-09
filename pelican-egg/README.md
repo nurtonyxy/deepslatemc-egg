@@ -5,11 +5,8 @@ Pelican can import Pterodactyl eggs using either JSON or YAML. Use `egg.yml` fro
 
 Notes:
 - Uses Java 21 by default.
-- The install script downloads `DeepslateMC.jar` from `DOWNLOAD_URL`.
-- Variables:
-  - `SERVER_JAR` (jar filename)
-  - `DOWNLOAD_URL` (fixed jar download path)
-  - `MC_SERVER_NAME` (sets the MOTD in `server.properties`)
+- The install script downloads `DeepslateMC.jar` from a URL built with `MC_VERSION`.
+- Variables: `SERVER_JAR` (jar filename), `MC_VERSION` (version folder), `MC_SERVER_NAME` (sets the MOTD in `server.properties`).
 
 Startup command:
 
