@@ -1,0 +1,12 @@
+{
+  "name": "DeepslateMC-Pelican",
+  "author": "nurtonyxy",
+  "description": "Pelican egg for DeepslateMC — Minecraft 1.21.11",
+  "java_version": "21",
+  "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{JAR}}",
+  "variables": {
+    "JAR": "DeepslateMC.jar",
+    "MEMORY": "1024"
+  },
+  "install": "#!/bin/bash\nset -e\napt-get update -y\napt-get install -y curl\ncurl -L -o ${JAR} \"https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar\"\n"
+}

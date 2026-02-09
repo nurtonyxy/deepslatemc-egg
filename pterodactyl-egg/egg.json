@@ -1,0 +1,19 @@
+{
+  "meta": {"version": "1.0", "author": "nurtonyxy"},
+  "name": "DeepslateMC",
+  "author": "nurtonyxy",
+  "description": "DeepslateMC — Minecraft 1.21.11",
+  "docker_image": "ghcr.io/pterodactyl/yolks:java-21",
+  "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JAR}}",
+  "stop": "stop",
+  "variables": [
+    {"name":"SERVER_JAR","description":"Server jar filename","env_variable":"SERVER_JAR","default":"DeepslateMC.jar","user_viewable":true,"user_editable":true},
+    {"name":"SERVER_MEMORY","description":"Memory (MB)","env_variable":"SERVER_MEMORY","default":"1024","user_viewable":true,"user_editable":true}
+  ],
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\nset -e\napt-get update -y\napt-get install -y curl\n# Download server jar from provided URL\ncurl -L -o ${SERVER_JAR} \"https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar\"\n",
+      "container": "0"
+    }
+  }
+}
