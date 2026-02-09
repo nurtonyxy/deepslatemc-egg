@@ -1,4 +1,4 @@
-# Pelican Egg — DeepslateMC
+# Pelican Egg - DeepslateMC
 
 This folder contains a simple Pelican-compatible egg manifest and install script.
 

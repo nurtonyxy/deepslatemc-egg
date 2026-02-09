@@ -1,7 +1,7 @@
 {
   "name": "DeepslateMC-Pelican",
   "author": "nurtonyxy",
-  "description": "Pelican egg for DeepslateMC — Minecraft 1.21.11",
+  "description": "Pelican egg for DeepslateMC - Minecraft 1.21.11",
   "java_version": "21",
   "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{JAR}}",
   "variables": {

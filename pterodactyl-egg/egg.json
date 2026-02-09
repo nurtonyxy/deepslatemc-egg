@@ -1,19 +1,52 @@
 {
-  "meta": {"version": "1.0", "author": "nurtonyxy"},
+  "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL",
+  "meta": {
+    "version": "PTDL_v2",
+    "update_url": null
+  },
+  "exported_at": "2026-02-09T00:00:00+00:00",
   "name": "DeepslateMC",
   "author": "nurtonyxy",
-  "description": "DeepslateMC — Minecraft 1.21.11",
-  "docker_image": "ghcr.io/pterodactyl/yolks:java-21",
+  "description": "DeepslateMC - Minecraft 1.21.11",
+  "features": null,
+  "docker_images": {
+    "ghcr.io/pterodactyl/yolks:java_21": "ghcr.io/pterodactyl/yolks:java_21"
+  },
+  "file_denylist": [],
   "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JAR}}",
-  "stop": "stop",
-  "variables": [
-    {"name":"SERVER_JAR","description":"Server jar filename","env_variable":"SERVER_JAR","default":"DeepslateMC.jar","user_viewable":true,"user_editable":true},
-    {"name":"SERVER_MEMORY","description":"Memory (MB)","env_variable":"SERVER_MEMORY","default":"1024","user_viewable":true,"user_editable":true}
-  ],
+  "config": {
+    "files": "{}",
+    "startup": "{}",
+    "logs": "{}",
+    "stop": "stop"
+  },
   "scripts": {
     "installation": {
       "script": "#!/bin/bash\nset -e\napt-get update -y\napt-get install -y curl\n# Download server jar from provided URL\ncurl -L -o ${SERVER_JAR} \"https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar\"\n",
-      "container": "0"
+      "container": "ghcr.io/pterodactyl/installers:debian",
+      "entrypoint": "bash"
     }
-  }
+  },
+  "variables": [
+    {
+      "name": "Server Jar File",
+      "description": "Server jar filename.",
+      "env_variable": "SERVER_JAR",
+      "default_value": "DeepslateMC.jar",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:200",
+      "field_type": "text"
+    },
+    {
+      "name": "Server Memory",
+      "description": "Memory in MB. Used by the panel to set limits.",
+      "env_variable": "SERVER_MEMORY",
+      "default_value": "1024",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:256",
+      "field_type": "text"
+    }
+  ]
 }
