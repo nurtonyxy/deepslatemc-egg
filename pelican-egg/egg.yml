@@ -1,27 +1,67 @@
-name: DeepslateMC-Pelican
-author: nurtonyxy
-description: "Pelican egg for DeepslateMC - Minecraft 1.21.11"
-java_version: "21"
-startup: "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{JAR}}"
+_comment: "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL"
+meta:
+  version: PTDL_v2
+  update_url: null
+exported_at: "2026-02-09T00:00:00+00:00"
+name: "DeepslateMC"
+author: "nurtonyxy@users.noreply.github.com"
+description: "DeepslateMC - Minecraft 1.21.11"
+features: null
+docker_images:
+  "ghcr.io/pterodactyl/yolks:java_21": "ghcr.io/pterodactyl/yolks:java_21"
+file_denylist: []
+startup: "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JAR}}"
+config:
+  files: "{}"
+  startup: "{}"
+  logs: "{}"
+  stop: "stop"
+scripts:
+  installation:
+    script: |-
+      #!/bin/bash
+      set -e
+      cd /mnt/server
+      apt-get update -y
+      apt-get install -y curl
+      # Download server jar from provided URL
+      curl -fsSL -o "${SERVER_JAR}" "${DOWNLOAD_URL}"
+      # Set MOTD from server name
+      safe_motd=$(printf '%s' "$MC_SERVER_NAME" | sed -e 's/[\\/&]/\\\\&/g')
+      if [ -f server.properties ]; then
+        if grep -q '^motd=' server.properties; then
+          sed -i "s/^motd=.*/motd=${safe_motd}/" server.properties
+        else
+          echo "motd=${MC_SERVER_NAME}" >> server.properties
+        fi
+      else
+        echo "motd=${MC_SERVER_NAME}" > server.properties
+      fi
+      ls -la "${SERVER_JAR}"
+    container: "ghcr.io/pterodactyl/installers:debian"
+    entrypoint: "bash"
 variables:
-  JAR: DeepslateMC.jar
-  MEMORY: "1024"
-  DOWNLOAD_URL: "https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar"
-  MC_SERVER_NAME: "DeepslateMC"
-install: |-
-  #!/bin/bash
-  set -e
-  cd /mnt/server
-  apt-get update -y
-  apt-get install -y curl
-  curl -fsSL -o ${JAR} "${DOWNLOAD_URL}"
-  safe_motd=$(printf '%s' "$MC_SERVER_NAME" | sed -e 's/[\\/&]/\\&/g')
-  if [ -f server.properties ]; then
-    if grep -q '^motd=' server.properties; then
-      sed -i "s/^motd=.*/motd=${safe_motd}/" server.properties
-    else
-      echo "motd=${MC_SERVER_NAME}" >> server.properties
-    fi
-  else
-    echo "motd=${MC_SERVER_NAME}" > server.properties
-  fi
+  - name: "Server Jar File"
+    description: "Server jar filename."
+    env_variable: "SERVER_JAR"
+    default_value: "DeepslateMC.jar"
+    user_viewable: true
+    user_editable: true
+    rules: "required|string|max:200"
+    field_type: "text"
+  - name: "Download URL"
+    description: "Where to download the server jar."
+    env_variable: "DOWNLOAD_URL"
+    default_value: "https://pascalpex.de/files/deepslate/1.21.11/DeepslateMC.jar"
+    user_viewable: true
+    user_editable: false
+    rules: "required|string|max:200"
+    field_type: "text"
+  - name: "Server Name"
+    description: "Sets the MOTD in server.properties."
+    env_variable: "MC_SERVER_NAME"
+    default_value: "DeepslateMC"
+    user_viewable: true
+    user_editable: true
+    rules: "required|string|max:200"
+    field_type: "text"
