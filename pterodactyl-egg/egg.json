@@ -16,7 +16,7 @@
   "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JAR}}",
   "config": {
     "files": "{}",
-    "startup": "{}",
+    "startup": "{\n  \"done\": \"Done \"\n}",
     "logs": "{}",
     "stop": "stop"
   },
