@@ -15,7 +15,7 @@
   "file_denylist": [],
   "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JAR}}",
   "config": {
-    "files": "{}",
+    "files": "{\n  \"server.properties\": {\n    \"parser\": \"properties\",\n    \"find\": {\n      \"server-ip\": \"0.0.0.0\",\n      \"server-port\": \"{{server.build.default.port}}\"\n    }\n  }\n}",
     "startup": "{\n  \"done\": \"Done \"\n}",
     "logs": "{}",
     "stop": "stop"
